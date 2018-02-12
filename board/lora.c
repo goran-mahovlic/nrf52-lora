@@ -349,7 +349,7 @@ void lora_sm( void )
         {
             case DEVICE_STATE_INIT:
             {
-		NRF_LOG_DEBUG("INIT\r\n");
+		//NRF_LOG_DEBUG("INIT\r\n");
                 LoRaMacPrimitives.MacMcpsConfirm = McpsConfirm;
                 LoRaMacPrimitives.MacMcpsIndication = McpsIndication;
                 LoRaMacPrimitives.MacMlmeConfirm = MlmeConfirm;
@@ -385,22 +385,25 @@ void lora_sm( void )
                 mibReq.Param.Rx2Channel = ( Rx2ChannelParams_t ){ 869525000, DR_3 };
                 LoRaMacMibSetRequestConfirm( &mibReq );
                 DeviceState = DEVICE_STATE_JOIN;
-		NRF_LOG_DEBUG("INIT done\r\n");
+		//SX1276Write( P30, 0x41 );
+		Gpio_t AntSwitchHf;
+		GpioWrite( &AntSwitchHf, 1 );
+		//NRF_LOG_DEBUG("INIT done\r\n");
                 break;
             }
             case DEVICE_STATE_JOIN:
             {
-		NRF_LOG_DEBUG("JOIN\r\n");
+		//NRF_LOG_DEBUG("JOIN\r\n");
                 MlmeReq_t mlmeReq;
 
                 // Initialize LoRaMac device unique ID
                 BoardGetUniqueId( DevEui );
-		NRF_LOG_DEBUG("DevEUI:\r\n");
-	        NRF_LOG_HEXDUMP_DEBUG(DevEui, sizeof(DevEui));
-		NRF_LOG_DEBUG("AppEUI:\r\n");
-	        NRF_LOG_HEXDUMP_DEBUG(AppEui, sizeof(AppEui));
-		NRF_LOG_DEBUG("AppKey:\r\n");
-	        NRF_LOG_HEXDUMP_DEBUG(AppKey, sizeof(AppKey));
+		//NRF_LOG_DEBUG("DevEUI:\r\n");
+	        //NRF_LOG_HEXDUMP_DEBUG(DevEui, sizeof(DevEui));
+		//NRF_LOG_DEBUG("AppEUI:\r\n");
+	        //NRF_LOG_HEXDUMP_DEBUG(AppEui, sizeof(AppEui));
+		//NRF_LOG_DEBUG("AppKey:\r\n");
+	        //NRF_LOG_HEXDUMP_DEBUG(AppKey, sizeof(AppKey));
 
                 mlmeReq.Type = MLME_JOIN;
 
@@ -414,12 +417,12 @@ void lora_sm( void )
                     LoRaMacMlmeRequest( &mlmeReq );
                 }
                 DeviceState = DEVICE_STATE_SLEEP;
-		NRF_LOG_DEBUG("JOIN done\r\n");
+		//NRF_LOG_DEBUG("JOIN done\r\n");
                 break;
             }
             case DEVICE_STATE_SEND:
             {
-		NRF_LOG_DEBUG("SEND\r\n");
+		//NRF_LOG_DEBUG("SEND\r\n");
                 if( NextTx == true )
                 {
                     PrepareTxFrame( AppPort );
@@ -429,7 +432,7 @@ void lora_sm( void )
                 // Schedule next packet transmission
                 TxDutyCycleTime = APP_TX_DUTYCYCLE + randr( -APP_TX_DUTYCYCLE_RND, APP_TX_DUTYCYCLE_RND );
                 DeviceState = DEVICE_STATE_CYCLE;
-		NRF_LOG_DEBUG("SEND done\r\n");
+		//NRF_LOG_DEBUG("SEND done\r\n");
                 break;
             }
             case DEVICE_STATE_CYCLE:

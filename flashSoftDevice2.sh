@@ -1,0 +1,1 @@
+openocd -s /usr/local/share/openocd/scripts/ -f nRF52.cfg -c init -c "reset init" -c halt -c "nrf51 mass_erase" -c "program ../SDK/components/softdevice/s132/hex/s132_nrf52_4.0.2_softdevice.hex verify" -c reset -c exit

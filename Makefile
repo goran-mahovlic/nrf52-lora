@@ -2,7 +2,7 @@ PROJECT_NAME     := sx1276mb1mas
 TARGETS          := nrf52832_xxaa
 OUTPUT_DIRECTORY := _build
 
-SDK_ROOT := ../..
+SDK_ROOT := /home/mistery/nRF52/SDK
 PROJ_DIR := .
 
 $(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
@@ -263,14 +263,16 @@ $(foreach target, $(TARGETS), $(call define_target, $(target)))
 # Flash the program
 flash: $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex
 	@echo Flashing: $<
-	nrfjprog --program $< -f nrf52 --sectorerase
-	nrfjprog --reset -f nrf52
+	#nrfjprog --program $< -f nrf52 --sectorerase
+	#nrfjprog --reset -f nrf52
+	./flashnRF.sh
 
 # Flash softdevice
 flash_softdevice:
 	@echo Flashing: s132_nrf52_4.0.2_softdevice.hex
-	nrfjprog --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_4.0.2_softdevice.hex -f nrf52 --sectorerase 
-	nrfjprog --reset -f nrf52
+	#nrfjprog --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_4.0.2_softdevice.hex -f nrf52 --sectorerase 
+	#nrfjprog --reset -f nrf52
+	./flashSoftDevice.sh
 
 erase:
 	nrfjprog --eraseall -f nrf52

@@ -1,0 +1,1 @@
+openocd -s /usr/local/share/openocd/scripts/ -f nRF52.cfg -c init -c "reset init" -c halt -c "program ../SDK/examples/dfu/bootloader_secure_ble/pca10040_debug/hex/secure_dfu_ble_s132_pca10040_debug.hex verify" -c reset -c exit

@@ -28,7 +28,7 @@
 #define RADIO_MISO P24 /* J2 pin 5 */
 #define RADIO_SCK P25 /* J2 pin 6 */
 
-#define RADIO_RESET P3 /* J4 pin 1 */
+#define RADIO_RESET P26 /* J4 pin 1 */
 #define RADIO_ANT_SWITCH_HF P30 /* J4 pin 5 */
 
 #define RADIO_DIO4_B P29 /* J4 pin 4 */

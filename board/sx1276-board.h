@@ -111,7 +111,7 @@ void SX1276SetAntSw( uint8_t opMode );
  * \retval isSupported [true: supported, false: unsupported]
  */
 bool SX1276CheckRfFrequency( uint32_t frequency );
-
+//extern void SX1276SetOpMode( uint8_t opMode );
 /*!
  * Radio hardware and global parameters
  */

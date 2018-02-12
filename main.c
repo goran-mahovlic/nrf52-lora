@@ -12,14 +12,15 @@
 #include "board.h"
 
 #define NRF_LOG_MODULE_NAME "APP"
-#define NRF_LOG_LEVEL 4
+#define NRF_LOG_LEVEL 0
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 
 TIMER_DEF(main_sm_timer);
-static char build_version[] = BUILD_VERSION;
+//static char build_version[] = BUILD_VERSION;
 static nrf_drv_wdt_channel_id m_channel_id;
 static void main_sm_timer_callback(void *ctx);
+uint8_t ReadReg;
 
 /**
  * @brief Assert callback.
@@ -33,11 +34,11 @@ static void main_sm_timer_callback(void *ctx);
 void wdt_init(void);
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
-	error_info_t *error_info = (error_info_t*)info;
-	NRF_LOG_ERROR("code: %d %s:%d\r\n", error_info->err_code,
-		      (uint32_t)error_info->p_file_name,
-		      error_info->line_num);
-	NRF_LOG_FLUSH();
+//	error_info_t *error_info = (error_info_t*)info;
+//	NRF_LOG_ERROR("code: %d %s:%d\r\n", error_info->err_code,
+//		      (uint32_t)error_info->p_file_name,
+//		      error_info->line_num);
+//	NRF_LOG_FLUSH();
 	wdt_init();
 	while (1) {};
 }
@@ -157,35 +158,38 @@ void power_manage(void)
 
 static void main_sm_timer_callback(void *ctx)
 {
-	NRF_LOG_DEBUG("sm_timer_callback\r\n");
+//	NRF_LOG_DEBUG("sm_timer_callback\r\n");
 }
 
 int main(void)
 {
 	/* Initialize */
         log_init();
-	NRF_LOG_INFO("Version: %s\r\n", (uint32_t)build_version);
-        NRF_LOG_INFO("HW init start\r\n");
+//	NRF_LOG_INFO("Version: %s\r\n", (uint32_t)build_version);
+//        NRF_LOG_INFO("HW init start\r\n");
 	timers_init();
 	gpiote_init();
 	mem_mgr_init();
 	rtc_init(NULL);
+//	i = SX1276Read(REG_LR_DIOMAPPING2);
 	sd_init();
-	NRF_LOG_INFO("HW init done\r\n");
+//	NRF_LOG_INFO("HW init done\r\n");
 #if 0
 	TimerSetValue(&main_sm_timer, 1000);
 	TimerStart(&main_sm_timer);
 
 
-	while(1){NRF_LOG_PROCESS();};
+	//while(1){NRF_LOG_PROCESS();};
 #endif
 
 
 	SX1276IoInit();
+	ReadReg = SX1276Read(REG_LR_DIOMAPPING2);
 	/* Enter main loop */
         for (;;) {
-		while(NRF_LOG_PROCESS()){};
+	//	i = SX1276Read(REG_LR_DIOMAPPING2);
 		lora_sm();
+		//i = SX1276Read(REG_LR_DIOMAPPING2);
 	}
 }
 

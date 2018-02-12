@@ -221,7 +221,7 @@ TIMER_DEF(RxTimeoutSyncWord);
 
 void SX1276Init( RadioEvents_t *events )
 {
-	NRF_LOG_DEBUG("Init 0x%x\r\n", (uint32_t)events);
+	//NRF_LOG_DEBUG("Init 0x%x\r\n", (uint32_t)events);
 	uint8_t i;
 
     RadioEvents = events;
@@ -250,7 +250,7 @@ void SX1276Init( RadioEvents_t *events )
     SX1276SetModem( MODEM_FSK );
 
     SX1276.Settings.State = RF_IDLE;
-	NRF_LOG_DEBUG("Init done\r\n");
+//	NRF_LOG_DEBUG("Init done\r\n");
 }
 
 RadioState_t SX1276GetStatus( void )
@@ -336,7 +336,7 @@ static void RxChainCalibration( void )
     uint8_t regPaConfigInitVal;
     uint32_t initialFreq;
 
-    NRF_LOG_DEBUG("RxChainCalibration\r\n");
+  //  NRF_LOG_DEBUG("RxChainCalibration\r\n");
     // Save context
     regPaConfigInitVal = SX1276Read( REG_PACONFIG );
     initialFreq = ( double )( ( ( uint32_t )SX1276Read( REG_FRFMSB ) << 16 ) |
@@ -364,7 +364,7 @@ static void RxChainCalibration( void )
     // Restore context
     SX1276Write( REG_PACONFIG, regPaConfigInitVal );
     SX1276SetChannel( initialFreq );
-    NRF_LOG_DEBUG("RxChainCalibration done\r\n");
+   // NRF_LOG_DEBUG("RxChainCalibration done\r\n");
 }
 
 /*!
@@ -1172,7 +1172,7 @@ int16_t SX1276ReadRssi( RadioModems_t modem )
 
 void SX1276Reset( void )
 {
-    NRF_LOG_DEBUG("Reset\r\n");
+//    NRF_LOG_DEBUG("Reset\r\n");
     // Set RESET pin to 0
     GpioWrite( &SX1276.Reset, 0 );
 
@@ -1188,7 +1188,7 @@ void SX1276Reset( void )
 
 void SX1276SetOpMode( uint8_t opMode )
 {
-    NRF_LOG_DEBUG("SetOpMode %d\r\n", opMode);
+//    NRF_LOG_DEBUG("SetOpMode %d\r\n", opMode);
     if( opMode == RF_OPMODE_SLEEP )
     {
         SX1276SetAntSwLowPower( true );
@@ -1308,7 +1308,7 @@ void SX1276SetPublicNetwork( bool enable )
 
 void SX1276OnTimeoutIrq( void* ctx )
 {
-    NRF_LOG_DEBUG("OnTimeoutIrq %d\r\n", SX1276.Settings.State);
+//    NRF_LOG_DEBUG("OnTimeoutIrq %d\r\n", SX1276.Settings.State);
     switch( SX1276.Settings.State )
     {
     case RF_RX_RUNNING:
